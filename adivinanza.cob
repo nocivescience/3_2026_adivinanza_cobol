@@ -1,0 +1,30 @@
+IDENTIFICATION DIVISION.
+PROGRAM-ID. ADIVINA-NUMERO.
+
+DATA DIVISION.
+WORKING-STORAGE SECTION.
+01 NUMERO-SECRETO PIC 9(2).
+01 SEMILLA        PIC 9(8).
+01 INTENTO        PIC 9(2) VALUE 99.
+
+PROCEDURE DIVISION.
+    
+    ACCEPT SEMILLA FROM TIME.
+    COMPUTE NUMERO-SECRETO = FUNCTION MOD(FUNCTION RANDOM(SEMILLA) * 100, 100).
+    
+    DISPLAY "¡Bienvenido al juego de adivinar el numero! " NUMERO-SECRETO.
+    
+    
+    PERFORM UNTIL INTENTO = NUMERO-SECRETO
+        DISPLAY "Introduce tu numero (00-99): " WITH NO ADVANCING
+        ACCEPT INTENTO
+        
+        IF INTENTO < NUMERO-SECRETO
+            DISPLAY "Muy bajo."
+        ELSE IF INTENTO > NUMERO-SECRETO
+            DISPLAY "Muy alto."
+        END-IF
+    END-PERFORM.
+
+    DISPLAY "¡Felicidades! Has adivinado el numero.".
+    STOP RUN.
